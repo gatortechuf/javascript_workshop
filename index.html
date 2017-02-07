@@ -1,0 +1,99 @@
+<html>
+<head>
+    <title>JavaScript Workshop</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Navbar</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reset</a>
+                </li>
+            </ul>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#postModal">Post</button>
+        </div>
+    </div>
+</nav>
+<!-- Post modal -->
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postModalLabel">Submit a Post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="post-image" class="form-control-label">Post Link:</label>
+                        <input type="text" class="form-control" id="post-image" />
+                    </div>
+                    <div class="form-group">
+                        <label for="post-title" class="form-control-label">Title</label>
+                        <input type="text" class="form-control" id="post-title" />
+                    </div>
+                    <div class="form-group">
+                        <label for="post-text" class="form-control-label">Caption</label>
+                        <textarea class="form-control" id="post-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Image containers -->
+<div class="container" id="post-list" style="margin-top: 2em;">
+</div>
+<!-- Already done -->
+<script>
+    function UserPost(image, title, caption) {
+        this.image = image;
+        this.title = title;
+        this.caption = caption;
+    }
+
+    function createPostHTML(image, title, caption) {
+        var html = `<div class="card" style="margin-top: 2em;">
+            <img class="card-img-top" src="${image}" />
+            <div class="card-block">
+                <h4 class="card-title">${title}</h4>
+                <p class="card-text">${caption}</p>
+            </div>
+        </div>`;
+
+        return html;
+    }
+
+    var ferrari = new UserPost("http://auto.ferrari.com/en_US/wp-content/uploads/sites/7/2016/01/Ferrari-488-GTB-siddel-view.jpg", "Ferrari", "Cool car");
+
+    var tesla = new UserPost("http://media.caranddriver.com/images/14q4/638369/2015-tesla-model-s-p85d-first-drive-review-car-and-driver-photo-648964-s-450x274.jpg", "Tesla", "Electric car");
+
+    var postList = [ferrari, tesla];
+
+    var postDiv = document.getElementById("post-list");
+
+    postList.forEach(function(e) {
+        postDiv.innerHTML += createPostHTML(e.image, e.title, e.caption);
+    });
+</script>
+</body>
+</html>
