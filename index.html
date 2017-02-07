@@ -20,7 +20,7 @@
                     <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Reset</a>
+                    <a class="nav-link" href="#" onclick="resetPosts();">Delete All Posts</a>
                 </li>
             </ul>
             <button class="btn btn-primary" data-toggle="modal" data-target="#postModal">Post</button>
@@ -40,7 +40,7 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="post-image" class="form-control-label">Post Link:</label>
+                        <label for="post-image" class="form-control-label">Image URL:</label>
                         <input type="text" class="form-control" id="post-image" />
                     </div>
                     <div class="form-group">
@@ -55,7 +55,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
+                <button type="button" class="btn btn-primary" onclick="submitPost();" data-dismiss="modal">Post</button>
             </div>
         </div>
     </div>
@@ -65,17 +65,21 @@
 </div>
 <!-- Already done -->
 <script>
+    var postList = [];
+    var postDiv = document.getElementById("post-list");
+
     function UserPost(image, title, caption) {
         this.image = image;
         this.title = title;
         this.caption = caption;
     }
 
-    function createPostHTML(image, title, caption) {
-        var html = `<div class="card" style="margin-top: 2em;">
-            <img class="card-img-top" src="${image}" />
+    function createPostHTML(image, title, caption, i) {
+        var html = `<div class="card" style="margin-top: 2em;" id="${i}">
+            <img class="card-img-top img-fluid" src="${image}" />
             <div class="card-block">
                 <h4 class="card-title">${title}</h4>
+                <p class="card-text">Likes: 15 <a href="#" class="btn btn-primary btn-sm">+1</a> | <a href="#" class="btn btn-danger btn-sm" onclick="deletePost(${i});">Delete</a></p>
                 <p class="card-text">${caption}</p>
             </div>
         </div>`;
@@ -83,17 +87,36 @@
         return html;
     }
 
+    function resetPosts() {
+        postList = [];
+        postDiv.innerHTML = "";
+    }
+
+    /* From here to the end of the <script> tag is for initial content only */
     var ferrari = new UserPost("http://auto.ferrari.com/en_US/wp-content/uploads/sites/7/2016/01/Ferrari-488-GTB-siddel-view.jpg", "Ferrari", "Cool car");
 
     var tesla = new UserPost("http://media.caranddriver.com/images/14q4/638369/2015-tesla-model-s-p85d-first-drive-review-car-and-driver-photo-648964-s-450x274.jpg", "Tesla", "Electric car");
 
-    var postList = [ferrari, tesla];
+    postList = [ferrari, tesla];
 
-    var postDiv = document.getElementById("post-list");
-
-    postList.forEach(function(e) {
-        postDiv.innerHTML += createPostHTML(e.image, e.title, e.caption);
+    postList.forEach(function(e, i) {
+        postDiv.innerHTML = createPostHTML(e.image, e.title, e.caption, i) + postDiv.innerHTML;
     });
+</script>
+<!-- For the workshop -->
+<script>
+    function submitPost() {
+        var image = document.getElementById('post-image').value;
+        var title = document.getElementById('post-title').value;
+        var caption = document.getElementById('post-text').value;
+        postDiv.innerHTML = createPostHTML(image, title, caption, postList.length) + postDiv.innerHTML;
+    }
+
+    function deletePost(postId) {
+        document.getElementById(postId).remove();
+    }
+
+    // TODO add liking a post
 </script>
 </body>
 </html>
