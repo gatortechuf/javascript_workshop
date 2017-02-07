@@ -74,6 +74,7 @@
         this.caption = caption;
     }
 
+    // TODO have them fill in the blanks for the templates maybe
     function createPostHTML(image, title, caption, i) {
         var html = `<div class="card" style="margin-top: 2em;" id="${i}">
             <img class="card-img-top img-fluid" src="${image}" />
@@ -81,6 +82,23 @@
                 <h4 class="card-title">${title}</h4>
                 <p class="card-text">Likes: <span id="likes-${i}">0</span> <a href="#" class="btn btn-primary btn-sm" onclick="likePost(${i})">+1</a> | <a href="#" class="btn btn-danger btn-sm" onclick="deletePost(${i});">Delete</a></p>
                 <p class="card-text">${caption}</p>
+            </div>
+            <ul class="list-group list-group-flush" id="comment-${i}">
+            </ul>
+            <div class="card-block">
+                <form>
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="user-${i}" placeholder="Name" />
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="commentbox-${i}" placeholder="Comment" />
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary" onclick="submitComment(${i})">Submit</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>`;
 
@@ -118,6 +136,12 @@
 
     function likePost(postId) {
         document.getElementById("likes-" + postId).innerHTML++;
+    }
+
+    function submitComment(postId) {
+        var name = document.getElementById("user-" + postId).value;
+        var comment = document.getElementById("commentbox-" + postId).value;
+        document.getElementById("comment-" + postId).innerHTML += "<li class=\"list-group-item\">" + name + ": " + comment + "</li>";
     }
 </script>
 </body>
