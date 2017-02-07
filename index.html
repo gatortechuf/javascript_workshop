@@ -79,7 +79,7 @@
             <img class="card-img-top img-fluid" src="${image}" />
             <div class="card-block">
                 <h4 class="card-title">${title}</h4>
-                <p class="card-text">Likes: 15 <a href="#" class="btn btn-primary btn-sm">+1</a> | <a href="#" class="btn btn-danger btn-sm" onclick="deletePost(${i});">Delete</a></p>
+                <p class="card-text">Likes: <span id="likes-${i}">0</span> <a href="#" class="btn btn-primary btn-sm" onclick="likePost(${i})">+1</a> | <a href="#" class="btn btn-danger btn-sm" onclick="deletePost(${i});">Delete</a></p>
                 <p class="card-text">${caption}</p>
             </div>
         </div>`;
@@ -116,7 +116,9 @@
         document.getElementById(postId).remove();
     }
 
-    // TODO add liking a post
+    function likePost(postId) {
+        document.getElementById("likes-" + postId).innerHTML++;
+    }
 </script>
 </body>
 </html>
