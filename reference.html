@@ -109,8 +109,8 @@
 
     postList = [iphone, android];
 
-    postList.forEach(function(e, i) {
-        postDiv.innerHTML = createPostHTML(e.image, e.title, e.caption, i) + postDiv.innerHTML;
+    postList.forEach(function(post, i) {
+        postDiv.innerHTML = createPostHTML(post.image, post.title, post.caption, i) + postDiv.innerHTML;
     });
     /* end of initial posts gen */
 
