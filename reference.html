@@ -63,6 +63,7 @@
 <!-- Image containers -->
 <div class="container" id="post-list" style="margin-top: 2em;">
 </div>
+<!-- Already done -->
 <script>
     function createPostHTML(image, title, caption, i) {
         return `<div class="card" style="margin-top: 2em;" id="${i}">
@@ -90,6 +91,60 @@
                 </form>
             </div>
         </div>`;
+    }
+
+    var postList = [];
+    var postDiv = document.getElementById("post-list");
+
+    function UserPost(image, title, caption) {
+        this.image = image;
+        this.title = title;
+        this.caption = caption;
+    }
+
+    /* From here to the foreach call is for initial content only */
+    var iphone = new UserPost("https://support.apple.com/library/content/dam/edam/applecare/images/en_US/iphone/iphone-6splus-colors.jpg", "iPhone", "Probably the worst phone");
+
+    var android = new UserPost("http://cdn2.gsmarena.com/vv/pics/google/google-pixel-02.jpg", "Google Pixel", "The best phone");
+
+    postList = [iphone, android];
+
+    postList.forEach(function(e, i) {
+        postDiv.innerHTML = createPostHTML(e.image, e.title, e.caption, i) + postDiv.innerHTML;
+    });
+    /* end of initial posts gen */
+
+    function resetPosts() {
+        postList = [];
+        postDiv.innerHTML = "";
+    }
+
+    function submitPost() {
+        var image = document.getElementById('post-image').value;
+        var title = document.getElementById('post-title').value;
+        var caption = document.getElementById('post-text').value;
+        postDiv.innerHTML = createPostHTML(image, title, caption, postList.length) + postDiv.innerHTML;
+    }
+
+    function likePost(postId) {
+        var post = document.getElementById("likes-" + postId);
+        if (post.getAttribute("data-likes") === 'false') {
+            post.setAttribute("data-likes", "true");
+            post.innerHTML++;
+        } else {
+            post.setAttribute("data-likes", "false");
+            post.innerHTML--;
+        }
+    }
+
+    function deletePost(postId) {
+        document.getElementById(postId).remove();
+    }
+
+    function submitComment(postId) {
+        var name = document.getElementById("user-" + postId).value;
+        var comment = document.getElementById("commentbox-" + postId).value;
+        document.getElementById("comment-" + postId).innerHTML += "<li class=\"list-group-item\">" + name + ": " + comment + "</li>";
     }
 </script>
 </body>
