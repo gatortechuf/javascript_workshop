@@ -13,7 +13,7 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">Not Instagram</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -77,21 +77,21 @@
     // TODO have them fill in the blanks for the templates maybe
     function createPostHTML(image, title, caption, i) {
         var html = `<div class="card" style="margin-top: 2em;" id="${i}">
-            <img class="card-img-top img-fluid" src="${image}" />
+            <img class="card-img-top" src="${image}" style="max-width: 500px; padding: 1em; margin: 0 auto;"/>
             <div class="card-block">
                 <h4 class="card-title">${title}</h4>
-                <p class="card-text">Likes: <span id="likes-${i}">0</span> <a href="#" class="btn btn-primary btn-sm" onclick="likePost(${i})">+1</a> | <a href="#" class="btn btn-danger btn-sm" onclick="deletePost(${i});">Delete</a></p>
+                <p class="card-text">Likes: <span id="likes-${i}">0</span> <button class="btn btn-primary btn-sm" onclick="likePost(${i})">+1</button> | <button class="btn btn-danger btn-sm" onclick="deletePost(${i});">Delete</button></p>
                 <p class="card-text">${caption}</p>
             </div>
             <ul class="list-group list-group-flush" id="comment-${i}">
             </ul>
             <div class="card-block">
-                <form>
+                <form onsubmit="return false;">
                     <div class="form-group row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="user-${i}" placeholder="Name" />
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="commentbox-${i}" placeholder="Comment" />
                         </div>
                         <div class="col-sm-2">
@@ -111,11 +111,11 @@
     }
 
     /* From here to the end of the <script> tag is for initial content only */
-    var ferrari = new UserPost("http://auto.ferrari.com/en_US/wp-content/uploads/sites/7/2016/01/Ferrari-488-GTB-siddel-view.jpg", "Ferrari", "Cool car");
+    var iphone = new UserPost("https://support.apple.com/library/content/dam/edam/applecare/images/en_US/iphone/iphone-6splus-colors.jpg", "iPhone", "Probably the worst phone");
 
-    var tesla = new UserPost("http://media.caranddriver.com/images/14q4/638369/2015-tesla-model-s-p85d-first-drive-review-car-and-driver-photo-648964-s-450x274.jpg", "Tesla", "Electric car");
+    var android = new UserPost("http://cdn2.gsmarena.com/vv/pics/google/google-pixel-02.jpg", "Google Pixel", "The best phone");
 
-    postList = [ferrari, tesla];
+    postList = [iphone, android];
 
     postList.forEach(function(e, i) {
         postDiv.innerHTML = createPostHTML(e.image, e.title, e.caption, i) + postDiv.innerHTML;
